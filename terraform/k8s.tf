@@ -31,7 +31,7 @@ resource "yandex_compute_instance" "bastion-nat" {
     user-data          = <<-EOT
 repo-update: true
 users:
-- name: netology
+- name: ubuntu
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   shell: /bin/bash
   ssh_authorized_keys:
@@ -76,7 +76,7 @@ resource "yandex_compute_instance" "master" {
     user-data          = <<-EOT
 repo-update: true
 users:
-- name: netology
+- name: ubuntu
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   shell: /bin/bash
   ssh_authorized_keys:
@@ -123,7 +123,7 @@ resource "yandex_compute_instance" "worker" {
     user-data          = <<-EOT
 repo-update: true
 users:
-- name: netology
+- name: ubuntu
   sudo: 'ALL=(ALL) NOPASSWD:ALL'
   shell: /bin/bash
   ssh_authorized_keys:
