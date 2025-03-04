@@ -1,0 +1,76 @@
+variable "cloud_id" {
+  description = "ID облака"
+  type        = string
+
+}
+variable "token" {
+  type        = string
+  description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
+}
+variable "folder_id" {
+  description = "ID папки"
+  type        = string
+
+}
+variable "zone" {
+  description = "Зона доступности"
+  type        = string
+  default     = "ru-central1-a"
+}
+
+variable "vpc_name" {
+  description = "Имя виртуальной сети k8s"
+  type        = string
+  default     = "k8s-network"
+}
+
+variable "subnet_zone" {
+  type        = list(string)
+  description = "Список зон"
+  default     = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
+}
+
+variable "cidr" {
+  type        = list(string)
+  description = "Список CIDR-ов"
+  default     = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"]
+}
+variable "cidr_bastion" {
+  type        = list(string)
+  description = "bastion net"
+  default     = ["192.168.0.0/24"]
+}
+
+variable "master" {
+  type        = map(any)
+  description = "Описание ресурсов для master нод"
+
+}
+
+variable "worker" {
+  type        = map(any)
+  description = "Описание ресурсов для worker нод"
+}
+
+variable "bastion" {
+  type        = map(any)
+  description = "Описание ресурсов для bastion нод"
+
+}
+
+variable "listener_grafana" {
+  type        = map(any)
+  description = "Описание параметров listener для grafana"
+}
+variable "listener_web_app" {
+  type        = map(any)
+  description = "Описание параметров listener для web-приложения"
+}
+variable "counts_masters" {
+  type = number
+  default = 1
+}
+variable "counts_workers" {
+  type = number
+  default = 2
+}
