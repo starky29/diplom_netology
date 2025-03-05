@@ -12,6 +12,11 @@ variable "folder_id" {
   type        = string
 
 }
+variable "ssh_key" {
+  description = "ssh public key"
+  type        = string
+
+}
 variable "zone" {
   description = "Зона доступности"
   type        = string

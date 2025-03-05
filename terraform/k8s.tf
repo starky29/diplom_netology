@@ -28,21 +28,19 @@ resource "yandex_compute_instance" "bastion-nat" {
   }
   metadata = {
     serial-port-enable = 1
-    user-data          = <<-EOT
-repo-update: true
-users:
-- name: ubuntu
-  sudo: 'ALL=(ALL) NOPASSWD:ALL'
-  shell: /bin/bash
-  ssh_authorized_keys:
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrXFpquCBJnrxA/yxU9y+W/h0M1+wSi0JRvpJ+gDP9h andruwkakz@gmail.com
-runcmd:
-  sudo apt update
-
-    EOT
+    ssh-keys = "ubuntu:${var.ssh_key}" 
+    user-data          =     <<-EOT
+    users:
+    - name: ubuntu
+      groups: sudo
+      shell: /bin/bash
+      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    runcmd:
+      sudo apt update
+     EOT
   }
 }
-###########################master########################################
+##########################master########################################
 resource "yandex_compute_instance" "master" {
 
   count = var.counts_masters
@@ -73,18 +71,16 @@ resource "yandex_compute_instance" "master" {
 
   metadata = {
     serial-port-enable = 1
-    user-data          = <<-EOT
-repo-update: true
-users:
-- name: ubuntu
-  sudo: 'ALL=(ALL) NOPASSWD:ALL'
-  shell: /bin/bash
-  ssh_authorized_keys:
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrXFpquCBJnrxA/yxU9y+W/h0M1+wSi0JRvpJ+gDP9h andruwkakz@gmail.com
-runcmd:
-  sudo apt update
-
-    EOT
+    ssh-keys = "ubuntu:${var.ssh_key}" 
+    user-data          =     <<-EOT
+    users:
+    - name: ubuntu
+      groups: sudo
+      shell: /bin/bash
+      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    runcmd:
+      sudo apt update
+     EOT
   }
 
   network_interface {
@@ -95,15 +91,15 @@ runcmd:
 ###########################workers########################################
 resource "yandex_compute_instance" "worker" {
 
-  count = var.counts_workers ##тут касяк
+  count = var.counts_workers
   
 
   allow_stopping_for_update = true
-  zone                      = var.subnet_zone[count.index] ##тут касяк
+  zone                      = var.subnet_zone[count.index]
   
   platform_id               = var.worker.platform_id
-  hostname                  = "k8s-worker-${count.index + 1}" ##тут касяк
-  name                      = "k8s-worker-${count.index + 1}" ##тут касяк
+  hostname                  = "k8s-worker-${count.index + 1}"
+  name                      = "k8s-worker-${count.index + 1}"
 
   resources {
     cores         = var.worker.cores
@@ -120,18 +116,16 @@ resource "yandex_compute_instance" "worker" {
 
   metadata = {
     serial-port-enable = 1
-    user-data          = <<-EOT
-repo-update: true
-users:
-- name: ubuntu
-  sudo: 'ALL=(ALL) NOPASSWD:ALL'
-  shell: /bin/bash
-  ssh_authorized_keys:
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrXFpquCBJnrxA/yxU9y+W/h0M1+wSi0JRvpJ+gDP9h andruwkakz@gmail.com
-runcmd:
-  sudo apt update
-
-    EOT
+    ssh-keys = "ubuntu:${var.ssh_key}" 
+    user-data          =     <<-EOT
+    users:
+    - name: ubuntu
+      groups: sudo
+      shell: /bin/bash
+      sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    runcmd:
+      sudo apt update
+     EOT
   }
 
   scheduling_policy {
@@ -140,7 +134,7 @@ runcmd:
 
   
   network_interface {
-    subnet_id          = yandex_vpc_subnet.subnets[var.subnet_zone[count.index]].id  ## тут касяк
+    subnet_id          = yandex_vpc_subnet.subnets[var.subnet_zone[count.index]].id
     security_group_ids = [yandex_vpc_security_group.nat-instance-sg.id]
   }
 }

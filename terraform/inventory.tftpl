@@ -1,34 +1,34 @@
 all:
-    hosts:
-        
-        %{ for i in master }
-        ${ i["name"] }:
-            ansible_host:
-            ip: ${ i["network_interface"][0]["nat_ip_address"] }
-            ansible_user: ubuntu
-            ansible_ssh_common_args: -J ubuntu@${ bastion["network_interface"][0]["nat_ip_address"] }
-        %{ endfor }
+  hosts:
+    
+    # Мастера
+    %{ for i in masters }
+    ${i["name"]}:
+      ansible_host: ${ i["network_interface"][0]["ip_address"] }
+      ansible_user: ubuntu
+      ansible_ssh_common_args: -J ubuntu@${ bastion.network_interface[0].nat_ip_address }
+    %{ endfor }
 
-        %{ for i in worker }
-        ${ i["name"] }:
-            ansible_host:
-            ip: ${ i["network_interface"][0]["nat_ip_address"] }
-            ansible_user: ubuntu
-            ansible_ssh_common_args: -J ubuntu@${ bastion["network_interface"][0]["nat_ip_address"] }
-        %{ endfor }
+    # Воркеры
+    %{ for i in workers }
+    ${i["name"]}:
+      ansible_host: ${ i["network_interface"][0]["ip_address"] }
+      ansible_user: ubuntu
+      ansible_ssh_common_args: -J ubuntu@${ bastion.network_interface[0].nat_ip_address }
+    %{ endfor }
         
 kube_control_plane:
     hosts: 
-        %{ for i in master }
+        %{ for i in masters }
         ${ i["name"] }:
         %{ endfor }
 kube_node:
     hosts:
-        %{ for i in worker }
+        %{ for i in workers }
         ${i["name"]}:
         %{ endfor }
 etcd:
     hosts: 
-        %{ for i in master }
+        %{ for i in masters }
         ${ i["name"] }:
         %{ endfor }
