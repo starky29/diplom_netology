@@ -1,10 +1,18 @@
 ---
 # tasks file for k8s_create_cluster
+- name: Check if /etc/kubernetes/admin.conf exists
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: admin_conf_exists
 
 - name: Initialize the Kubernetes cluster using kubeadm # инициализируем кластер
   become: true
   command: kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12
-
+  register: kubeadm_init_result
+  until: kubeadm_init_result.rc == 0
+  retries: 3
+  delay: 15
+  when: not admin_conf_exists.stat.exists
 
 - name: get permission # даем доступ для обычного пользователя
   shell: "{{ item }}"
@@ -13,6 +21,7 @@
    - mkdir -p $HOME/.kube
    - sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
    - sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
 
 - name: Install calico pod network # устанавливаем calico pod network
   become: false
@@ -27,4 +36,5 @@
   register: join_command
 
 - name: Copy join command to local file # создаем локальный файл и добавляем туда переменную для присоединения ноды
+  become: false
   local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"

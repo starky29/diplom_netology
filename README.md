@@ -59,6 +59,9 @@
 3. Команда `kubectl get pods --all-namespaces` отрабатывает без ошибок.
 ---
 ## Решение
+* ![alt text](image-10.png)
+* ![alt text](image-11.png)
+* ![alt text](image-12.png)
 
 ---
 ### Создание тестового приложения
