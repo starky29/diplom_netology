@@ -48,8 +48,8 @@ resource "yandex_compute_instance" "master" {
   allow_stopping_for_update = true
   zone                      = var.subnet_zone[count.index]
   platform_id               = var.worker.platform_id
-  hostname                  = "master-${count.index + 1}"
-  name                      = "master-${count.index + 1}"
+  hostname                  = "k8s-master-${count.index + 1}"
+  name                      = "k8s-master-${count.index + 1}"
 
   resources {
     cores         = var.master.cores
