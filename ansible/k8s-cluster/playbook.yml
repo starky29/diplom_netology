@@ -1,0 +1,21 @@
+- name: install docker and kubectl
+  hosts: all
+  become: true
+  remote_user: netology
+  roles:
+    - docker_install
+    - k8s_install
+
+- name: create cluster
+  hosts: kube_control_plane
+  become: true
+  remote_user: netology
+  roles:
+    - k8s_create_cluster
+
+- name: node invite
+  hosts: kube_node
+  become: true
+  remote_user: netology
+  roles:
+    - node_invite

@@ -38,12 +38,12 @@ variable "subnet_zone" {
 variable "cidr" {
   type        = list(string)
   description = "Список CIDR-ов"
-  default     = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"]
+  default     = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
 }
 variable "cidr_bastion" {
   type        = list(string)
   description = "bastion net"
-  default     = ["192.168.0.0/24"]
+  default     = ["10.1.0.0/24"]
 }
 
 variable "master" {

@@ -1,0 +1,65 @@
+---
+# tasks file for k8s
+- name: install k8s dependencies # устанавливаем зависимости для kubernetes
+  apt:
+    name: 
+      - ca-certificates
+      - curl
+      - apt-transport-https
+      # - keepalived 
+      # - haproxy
+    state: present
+    update_cache: yes
+
+- name: Disable swap
+  ansible.builtin.command: swapoff -a
+ 
+- name: create folder for keyrings # cоздаем папку keyrings, потому что в ubuntu раньше 22 версии нет данной папки
+  become: true
+  ansible.builtin.shell: mkdir /etc/apt/keyrings | sudo chmod 777 /etc/apt/keyrings
+
+- name: add gpg key # добавляем ключ
+  apt_key:
+    url: "{{ k8s_gpg_key }}"
+    state: present
+    keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+- name: add repository # добавляем репозиторий
+  apt_repository: 
+    repo: "{{ k8s_apt_repo }}"
+    state: present
+
+- name: install k8s # устанавливаем kubernetes
+  apt:
+    name:
+      - kubectl
+      - kubeadm
+      - kubelet
+    
+- name: restart kubelet # презапускаем kubelet
+  service:
+    name: kubelet
+    state: restarted
+
+- name: Enable kubelet
+  become: true
+  ansible.builtin.systemd:
+    name: kubelet
+    state: started
+    enabled: true
+- name: Create a configuration file for containerd and set it to default
+  ansible.builtin.shell: |
+    mkdir -p /etc/containerd
+    containerd config default | sudo tee /etc/containerd/config.toml
+- name: Set cgroupdriver to systemd # замена строки на включение плагина CRI 
+  ansible.builtin.lineinfile:
+    path: /etc/containerd/config.toml
+    regexp: 'SystemdCgroup = false'
+    line: SystemdCgroup = true
+    state: present #
+
+- name: restart containedr # презапускаем containedr
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+

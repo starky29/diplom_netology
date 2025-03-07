@@ -59,9 +59,9 @@
 3. Команда `kubectl get pods --all-namespaces` отрабатывает без ошибок.
 ---
 ## Решение
-* ![alt text](image-10.png)
-* ![alt text](image-11.png)
-* ![alt text](image-12.png)
+За основу была взята роль для [ansible](https://vk.com/@kodepteam-sozdanie-kubernetes-klastera-pri-pomoschi-ansible-rolei-i-mu) и переделаны под [актуальное](./ansible/k8s-cluster/) состояние (например настройка сети и т.д.)
+* ![alt text](image-14.png)
+* ![alt text](image-13.png)
 
 ---
 ### Создание тестового приложения
@@ -113,6 +113,10 @@
 3. Дашборды в grafana отображающие состояние Kubernetes кластера.
 4. Http доступ на 80 порту к тестовому приложению.
 5. Atlantis или terraform cloud или ci/cd-terraform
+---
+## Решение
+
+
 ---
 ### Установка и настройка CI/CD
 
