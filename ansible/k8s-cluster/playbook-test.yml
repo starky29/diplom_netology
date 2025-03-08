@@ -1,0 +1,5 @@
+- name: monitoring
+  hosts: k8s-master-1
+  remote_user: ubuntu
+  roles:
+    - gaps

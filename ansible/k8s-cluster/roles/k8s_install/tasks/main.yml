@@ -6,8 +6,6 @@
       - ca-certificates
       - curl
       - apt-transport-https
-      # - keepalived 
-      # - haproxy
     state: present
     update_cache: yes
 
@@ -35,6 +33,7 @@
       - kubectl
       - kubeadm
       - kubelet
+
     
 - name: restart kubelet # презапускаем kubelet
   service:
@@ -62,4 +61,30 @@
   ansible.builtin.service:
     name: containerd
     state: restarted
+#helm
+- name: Download Helm binary
+  get_url:
+    url: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
+    dest: /tmp/helm.tar.gz
+    mode: '0755'
+  vars:
+    helm_version: "3.10.2"  # Replace with desired version
 
+- name: Extract Helm archive
+  unarchive:
+    src: /tmp/helm.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/linux-amd64/helm
+
+- name: Add Helm to PATH
+  lineinfile:
+    path: /etc/profile.d/helm.sh
+    line: 'export PATH=/usr/local/bin/linux-amd64:$PATH'
+    create: yes
+    state: present
+
+- name: Reload system environment variables
+  shell: source /etc/profile.d/helm.sh
+  args:
+    executable: /bin/bash

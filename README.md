@@ -60,6 +60,8 @@
 ---
 ## Решение
 За основу была взята роль для [ansible](https://vk.com/@kodepteam-sozdanie-kubernetes-klastera-pri-pomoschi-ansible-rolei-i-mu) и переделаны под [актуальное](./ansible/k8s-cluster/) состояние (например настройка сети и т.д.)
+запускать playbook необходимо с параметром:
+```ansible-playbook -i hosts.yml ./k8s-cluster/playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no' ```
 * ![alt text](image-14.png)
 * ![alt text](image-13.png)
 
@@ -115,7 +117,10 @@
 5. Atlantis или terraform cloud или ci/cd-terraform
 ---
 ## Решение
-
+ Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер
+* ![alt text](image-17.png)
+* 
+  
 
 ---
 ### Установка и настройка CI/CD
