@@ -119,7 +119,8 @@
 ## Решение
  Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер
 * ![alt text](image-17.png)
-* 
+ Задеплоил приложение
+* ![alt text](image-18.png) 
   
 
 ---
