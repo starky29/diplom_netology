@@ -90,6 +90,7 @@
 * ![alt text](image-19.png)
 Задеплоил [приложение](./manifests/app.yaml)
 * ![alt text](image-18.png) 
+* ![alt text](image-20.png)
   
 
 ---
