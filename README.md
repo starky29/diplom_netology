@@ -85,7 +85,10 @@
 ## 4.Решение
  Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер
 * ![alt text](image-17.png)
- Задеплоил [приложение](./manifests/app.yaml)
+Для того что бы вывести наружу сервисы создал [балансер](./terraform/balancer.tf) и задеплоил [nginx-controller](./manifests/ing-mon-nginx.yaml)
+Изменил сервис для графаны под настройки своего балансера [grafana-svc](./manifests/garafana-svc.yaml), а так же [ингресс](./manifests/ingres-monitoring.yaml)
+* ![alt text](image-19.png)
+Задеплоил [приложение](./manifests/app.yaml)
 * ![alt text](image-18.png) 
   
 
