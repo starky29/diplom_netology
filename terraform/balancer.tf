@@ -1,5 +1,6 @@
 # Создание групп целей для балансировщика нагрузки
 resource "yandex_lb_target_group" "k8s-worker-cluster" {
+  depends_on      = [yandex_compute_instance.worker]
   name = "k8s-worker-cluster"
   dynamic "target" {
     for_each = yandex_compute_instance.worker
