@@ -1,10 +1,14 @@
 version: 3
+repos:
+  - id: /.*/diplom_netology.git/
+    allowed_overrides: [workflow]
+    apply_requirements: [approved]
 automerge: true
 workspace: default
 projects:
-- name: diplom_netology
-  dir: diplom_netology
-  workflow: pull-request
-  terraform_version: latest
-  allow_custom_workflows: false
-  apply_requirements: [approved]
+  - name: diplom_netology
+    dir: diplom_netology
+    workflow: pull-request
+    terraform_version: latest
+    allow_custom_workflows: false
+    apply_requirements: [approved]
