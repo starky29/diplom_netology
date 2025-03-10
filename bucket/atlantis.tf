@@ -1,3 +1,4 @@
+#настройка атлантис сервера
 resource "yandex_vpc_network" "atlantis" {
   name = var.vpc_name
 }
