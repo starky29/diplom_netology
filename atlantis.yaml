@@ -1,11 +1,11 @@
 version: 3
 repos:
-  - id: /.*/diplom_netology.git/
+  - id: starky29/diplom_netology.git
     allowed_overrides: [workflow]
     apply_requirements: [approved]
 projects:
   - name: diplom_netology
-    dir: diplom_netology
+    dir: bucket
     workflow: pull-request
     terraform_version: latest
     allow_custom_workflows: false
