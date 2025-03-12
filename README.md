@@ -19,13 +19,13 @@
 ---
 ## 1.Решение
 Создание сервисного аккаунта а так же подготовка [backend](./bucket/) выполняется конфигом терраформа расположенном в папке backend
-* ![alt text](image.png)
+* ![alt text](img/image.png)
 Конфиг для терраформа создающий ноды кластера, шлюз, а так же сети (таблицы маршрутизации) находиться в папке terraform
-* ![alt text](image-1.png)
-* ![alt text](image-2.png)
-* ![alt text](image-3.png)
-* ![alt text](image-4.png)
-* ![alt text](image-5.png)
+* ![alt text](img/image-1.png)
+* ![alt text](img/image-2.png)
+* ![alt text](img/image-3.png)
+* ![alt text](img/image-4.png)
+* ![alt text](img/image-5.png)
 ---
 ### 2.Создание Kubernetes кластера
 
@@ -41,8 +41,8 @@
 За основу была взята роль для [ansible](https://vk.com/@kodepteam-sozdanie-kubernetes-klastera-pri-pomoschi-ansible-rolei-i-mu) и переделаны под [актуальное](./ansible/k8s-cluster/) состояние (например настройка сети и т.д.)
 запускать playbook необходимо с параметром:
 ```ansible-playbook -i hosts.yml ./k8s-cluster/playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no' ```
-* ![alt text](image-14.png)
-* ![alt text](image-13.png)
+* ![alt text](img/image-14.png)
+* ![alt text](img/image-13.png)
 
 ---
 ### 3.Создание тестового приложения
@@ -52,18 +52,18 @@
 Ожидаемый результат:
 
 1. Git репозиторий с тестовым приложением и Dockerfile.
-2. Регистри с собранным docker image. В качестве регистри может быть DockerHub или Yandex Container Registry, созданный также с помощью terraform.
+2. Регистри с собранным docker img/image. В качестве регистри может быть DockerHub или Yandex Container Registry, созданный также с помощью terraform.
 
 ---
 ## 3.Решение
 Созданное приложение с nginx лежит в репозитории [app_for_diplom](https://github.com/starky29/app_for_diplom)
 Подготовил образ
-* ![alt text](image-6.png)
+* ![alt text](img/image-6.png)
 Загрузил образ
-* ![alt text](image-9.png)
-* ![alt text](image-8.png)
+* ![alt text](img/image-9.png)
+* ![alt text](img/image-8.png)
 Проверил работу образа
-* ![alt text](image-7.png)
+* ![alt text](img/image-7.png)
   
 ---
 ### 4.Подготовка cистемы мониторинга и деплой приложения
@@ -84,19 +84,19 @@
 ---
 ## 4.Решение
  Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер
-* ![alt text](image-17.png)
+* ![alt text](img/image-17.png)
 Для того что бы вывести наружу сервисы создал [балансер](./terraform/balancer.tf) и задеплоил [nginx-controller](./manifests/ing-mon-nginx.yaml)
 Изменил сервис для графаны под настройки своего балансера [grafana-svc](./manifests/garafana-svc.yaml), а так же [ингресс](./manifests/ingres-monitoring.yaml)
-* ![alt text](image-19.png)
+* ![alt text](img/image-19.png)
 Задеплоил [приложение](./manifests/app.yaml)
-* ![alt text](image-18.png) 
-* ![alt text](image-20.png)
+* ![alt text](img/image-18.png) 
+* ![alt text](img/image-20.png)
   
 
 ---
 ### 5.Установка и настройка CI/CD
 
-Осталось настроить ci/cd систему для автоматической сборки docker image и деплоя приложения при изменении кода.
+Осталось настроить ci/cd систему для автоматической сборки docker img/image и деплоя приложения при изменении кода.
 
 Цель:
 
@@ -111,12 +111,12 @@
 ---
 ## 5.Решение
 Подготовил секреты
-* ![alt text](image-21.png)
+* ![alt text](img/image-21.png)
 Настроил runner
-* ![alt text](image-22.png)
+* ![alt text](img/image-22.png)
 Настроил workflow [файл](starky29/app_for_diplom.git) для ci/cd
 Тест автобиплоя
-* ![alt text](image-24.png)
-* ![alt text](image-25.png)
-* ![alt text](image-23.png)
+* ![alt text](img/image-24.png)
+* ![alt text](img/image-25.png)
+* ![alt text](img/image-23.png)
 ---
