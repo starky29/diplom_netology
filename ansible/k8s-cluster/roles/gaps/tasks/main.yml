@@ -5,4 +5,7 @@
     - /usr/local/bin/linux-amd64/helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     - /usr/local/bin/linux-amd64/helm repo update
     - /usr/local/bin/linux-amd64/helm install kube-prometheus prometheus-community/kube-prometheus-stack
+    - kubectl delete service/kube-prometheus-grafana
+    - kubectl apply -f https://raw.githubusercontent.com/starky29/diplom_netology/refs/heads/main/manifests/garafana-svc.yaml
+    - kubectl apply -f https://raw.githubusercontent.com/starky29/diplom_netology/refs/heads/main/manifests/ingres-monitoring.yaml
   

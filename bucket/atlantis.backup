@@ -47,16 +47,16 @@ resource "yandex_compute_instance" "atlantis" {
                   unzip atlantis_linux_amd64.zip
                   chmod +x atlantis
                   sudo mv atlantis /usr/local/bin/
-                  wget https://hashicorp-releases.yandexcloud.net/terraform/1.11.1/terraform_1.11.1_linux_amd64.zip
-                  unzip terraform_1.11.1_linux_amd64.zip
+                  wget https://hashicorp-releases.yandexcloud.net/terraform/1.8.5/terraform_1.8.5_linux_amd64.zip
+                  unzip terraform_1.8.5_linux_amd64.zip
                   sudo mv terraform /usr/local/bin/
                   atlantis server \
                     --atlantis-url=http://localhost:4141 \
                     --gh-webhook-secret=${webhook_token} \
                     --gh-user=starky29 \
-                    --gh-token=${github_token}
-                    --repo-allowlist="starky29/diplom_netology"
-                    --default-tf-version="latest"
+                    --gh-token=${github_token}\
+                    --repo-allowlist="starky29/diplom_netology"\
+                    --default-tf-version="1.8.5"
                 EOF
   }
   scheduling_policy {

@@ -1,0 +1,76 @@
+name: Terraform CI/CD for Yandex Cloud
+
+on:
+  push:
+    branches:
+      - main # Замените на нужную ветку
+  pull_request:
+    types:
+      - synchronize
+
+env:
+  YC_TOKEN: ${{ secrets.YC_TOKEN }} # Токен для доступа к API Яндекс.Облака
+  YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+  YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+
+jobs:
+  terraform_plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Получаем полную историю коммитов
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.8.5
+
+      - name: Authenticate to Yandex.Cloud
+        run: |
+          export YC_TOKEN=$YC_TOKEN
+          export YC_CLOUD_ID=$YC_CLOUD_ID
+          export YC_FOLDER_ID=$YC_FOLDER_ID
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Formatting
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -out=plan.tfplan
+          cat plan.tfplan | grep -q 'No changes' && exit 0 || exit 1
+
+  terraform_apply:
+    needs: terraform_plan
+    if: github.event_name == 'push'
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.8.5
+
+      - name: Authenticate to Yandex.Cloud
+        run: |
+          export YC_TOKEN=$YC_TOKEN
+          export YC_CLOUD_ID=$YC_CLOUD_ID
+          export YC_FOLDER_ID=$YC_FOLDER_ID
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve plan.tfplan
