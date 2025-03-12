@@ -112,5 +112,11 @@
 ## 5.Решение
 Подготовил секреты
 * ![alt text](image-21.png)
-* 
+Настроил runner
+* ![alt text](image-22.png)
+Настроил workflow [файл](starky29/app_for_diplom.git) для ci/cd
+Тест автобиплоя
+* ![alt text](image-24.png)
+* ![alt text](image-25.png)
+* ![alt text](image-23.png)
 ---
