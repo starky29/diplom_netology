@@ -8,4 +8,3 @@
     - kubectl delete service/kube-prometheus-grafana
     - kubectl apply -f https://raw.githubusercontent.com/starky29/diplom_netology/refs/heads/main/manifests/garafana-svc.yaml
     - kubectl apply -f https://raw.githubusercontent.com/starky29/diplom_netology/refs/heads/main/manifests/ingres-monitoring.yaml
-  
