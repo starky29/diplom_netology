@@ -32,4 +32,4 @@ spec:
     - protocol: TCP
       name: app
       port: 80
-      nodePort: 20080
+      nodePort: 30080
