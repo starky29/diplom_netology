@@ -52,10 +52,10 @@ resource "yandex_compute_instance" "atlantis" {
                   sudo mv terraform /usr/local/bin/
                   atlantis server \
                     --atlantis-url=http://localhost:4141 \
-                    --gh-webhook-secret=${webhook_token} \
+                    --gh-webhook-secret="${var.webhook_token}"\
                     --gh-user=starky29 \
-                    --gh-token=${github_token}\
-                    --repo-allowlist="starky29/diplom_netology"\
+                    --gh-token="${var.github_token}"\
+                    --repo-allowlist="starky29/diplom_netology/bucket"\
                     --default-tf-version="1.8.5"
                 EOF
   }
