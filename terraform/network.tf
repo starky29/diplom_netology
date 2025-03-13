@@ -30,6 +30,8 @@ resource "yandex_vpc_route_table" "nat-instance-route" {
   }
 }
 
+
+
 resource "yandex_vpc_security_group" "nat-instance-sg" {
   name       = "nat-instance-sg"
   network_id = yandex_vpc_network.k8s.id
