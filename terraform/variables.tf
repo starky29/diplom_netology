@@ -18,17 +18,17 @@ variable "ssh_key" {
   type        = string
 }
 
-variable "TF_VAR_bucket" {
+variable "bucket" {
   type        = string
   description = "bucket name"
 } 
 
-variable "TF_VAR_access_key" {
+variable "access_key" {
   type        = string
   description = "access_key"
 }
 
-variable "TF_VAR_secret_key" {
+variable "secret_key" {
   type        = string
   description = "secret_key"
 }
