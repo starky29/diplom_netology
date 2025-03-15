@@ -42,8 +42,8 @@ jobs:
 
       - name: Validate Terraform configuration
         run: |
-          ls -la
           cd ./terraform/
+          ls -la
           terraform validate
 
       - name: Plan changes
