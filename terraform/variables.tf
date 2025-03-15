@@ -25,12 +25,12 @@ variable "TF_VAR_bucket" {
 
 variable "TF_VAR_access_key" {
   type        = string
-  description = "bucket_access_key"
+  description = "access_key"
 }
 
 variable "TF_VAR_secret_key" {
   type        = string
-  description = "bucket_secret_key"
+  description = "secret_key"
 }
 
 variable "zone" {
