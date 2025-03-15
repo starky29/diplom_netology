@@ -43,6 +43,7 @@ jobs:
         run: |
           cd ./terraform/
           ls -la
+          echo ${{env.TF_VAR_access_key}}
           terraform apply
         
   destroy-infrastructure:

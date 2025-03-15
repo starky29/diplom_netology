@@ -14,7 +14,7 @@ terraform {
     endpoints = {
       s3 = "https://storage.yandexcloud.net"
     }
-    bucket     =  ${{secrets.BUCKET}}
+    bucket     =  var.TF_VAR_bucket
     region     = "ru-central1"
     key        = "terraform.tfstate"
     access_key = var.TF_VAR_access_key
