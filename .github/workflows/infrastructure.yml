@@ -65,7 +65,6 @@ jobs:
           cd ./terraform/
           terraform apply -auto-approve 
 
-        
   destroy-infrastructure:
     needs: Plan-infrastructure
     runs-on: ubuntu-latest
