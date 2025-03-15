@@ -20,23 +20,24 @@ jobs:
         with:
           terraform_version: '1.8.5'
 
-      - name: Change to Terraform directory and list files
-        run: |
-          cd terraform/
-          ls -la
-
       - name: Initialize Terraform
-        run: terraform init
+        run: |
+          ls -la
+          ./terraform/terraform init
 
       - name: Validate Terraform configuration
-        run: terraform validate
+        run: |
+          ls -la
+          ./terraform/terraform validate
 
       # - name: Plan changes
       #   run: terraform plan
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform/terraform apply
+        run: |
+          ls -la
+          ./terraform/terraform apply
         
   destroy-infrastructure:
     runs-on: ubuntu-latest
