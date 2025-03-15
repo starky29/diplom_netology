@@ -17,7 +17,7 @@ env:
   TF_VAR_ssh_key: ${{secrets.SSH_KEY}}
 
 jobs:
-  plan-infrastructure:
+  Plan-infrastructure:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -42,12 +42,34 @@ jobs:
         run: |
           cd ./terraform/
           terraform plan
+  Apply-infrastructure:
+    runs-on: ubuntu-latest
+    needs: Plan-infrastructure
+    if: false 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: '1.8.5'
+
+      - name: Initialize Terraform
+        run: |
+          cd ./terraform/
+          terraform init
+      - name: Apply changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd ./terraform/
+          terraform apply -auto-approve 
 
         
   destroy-infrastructure:
-    needs: plan-infrastructure
+    needs: Apply-infrastructure
     runs-on: ubuntu-latest
-    if: github.event.inputs.action == 'destroy'
+    if: false 
     steps:
         - name: Checkout code
           uses: actions/checkout@v2

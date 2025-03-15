@@ -16,7 +16,7 @@ env:
   TF_VAR_token: ${{ secrets.YANDEX_CLOUD_TOKEN }}
   TF_VAR_ssh_key: ${{secrets.SSH_KEY}}
 jobs:
-  plan-infrastructure:
+  apply-infrastructure:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
