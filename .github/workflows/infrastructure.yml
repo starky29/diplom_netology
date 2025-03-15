@@ -31,6 +31,7 @@ jobs:
         run: |
           cd ./terraform/
           terraform init -backend-config="bucket=${{ secrets.BUCKET }}" -backend-config="secret_key=${{ secrets.SECRET_KEY }}" -backend-config="access_key=${{ secrets.ACCESS_KEY }}"
+          terraform plan
 
       - name: Validate Terraform configuration
         run: |
