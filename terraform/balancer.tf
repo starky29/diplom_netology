@@ -34,6 +34,7 @@ resource "yandex_lb_network_load_balancer" "k8s" {
     }
   }
 }
+
 resource "yandex_lb_network_load_balancer" "k8sgrafana" {
   depends_on = [yandex_lb_network_load_balancer.k8s]
   name = "grafana-k8s-balancer"
