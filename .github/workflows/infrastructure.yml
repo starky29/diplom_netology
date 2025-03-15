@@ -41,7 +41,7 @@ jobs:
           echo "export access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
           echo "export secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
         
-          terraform plan -var="bucket=${{ secrets.BUCKET }}" -var="access_key=${{ secrets.ACCESS_KEY }}" -var="secret_key=${{ secrets.SECRET_KEY }}" -var="cloud_id=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" -var="folder_id=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" -var="token=${{ secrets.YANDEX_CLOUD_TOKEN }}"
+          terraform plan -var="bucket=${{ secrets.BUCKET }}" -var="access_key=${{ secrets.ACCESS_KEY }}" -var="secret_key=${{ secrets.SECRET_KEY }}" -var="cloud_id=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" -var="folder_id=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" -var="token=${{ secrets.YANDEX_CLOUD_TOKEN }}" -var="ssh_key=${{secrets.SSH_KEY}}"
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -67,4 +67,4 @@ jobs:
           run: terraform init
 
         - name: Destroy infrastructure
-          run: terraform destroy -auto-approve
+          run: terraform destroy -auto-approve 
