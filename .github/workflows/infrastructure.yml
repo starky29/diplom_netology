@@ -38,7 +38,7 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          terraform plan
+          terraform plan -auto-approve
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
