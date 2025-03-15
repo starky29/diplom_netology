@@ -37,7 +37,10 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          echo $TF_VAR_TOKEN
+          echo "export TF_VAR_bucket=${{ secrets.BUCKET }}" >> $GITHUB_ENV
+          echo "export TF_VAR_access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "export TF_VAR_secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+        
           terraform plan
 
       - name: Apply changes
