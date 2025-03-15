@@ -20,14 +20,10 @@ jobs:
         with:
           terraform_version: '1.8.5'
 
-      - name: List files in the working directory
-        run: ls -la
-
-      - name: Move to working directory
-        run: cd terraform/
-
-      - name: List files in the working directory
-        run: ls -la
+      - name: Change to Terraform directory and list files
+        run: |
+          cd terraform/
+          ls -la
 
       - name: Initialize Terraform
         run: terraform init
