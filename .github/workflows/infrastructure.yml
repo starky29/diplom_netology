@@ -8,7 +8,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-    
+
+
 env:
   TF_VAR_bucket: ${{ secrets.BUCKET }}
   TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
