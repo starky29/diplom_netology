@@ -17,7 +17,7 @@ env:
   TF_VAR_ssh_key: ${{secrets.SSH_KEY}}
 
 jobs:
-  deploy-infrastructure:
+  plan-infrastructure:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -46,7 +46,11 @@ jobs:
         run: |
           cd ./terraform/
           terraform plan
-
+  
+  apply-infrastructure:
+    needs: plan-infrastructure
+    runs-on: ubuntu-latest
+    steps:
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
@@ -55,7 +59,7 @@ jobs:
 
         
   destroy-infrastructure:
-    needs: deploy-infrastructure
+    needs: plan-infrastructure
     runs-on: ubuntu-latest
     if: github.event.inputs.action == 'destroy'
     steps:
