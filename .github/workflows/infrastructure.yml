@@ -20,13 +20,9 @@ jobs:
         with:
           terraform_version: '1.8.5'
 
-      - name: Configure Terraform Environment
-        run: |
-          cd terraform/
-          echo "export YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
-          echo "export YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
-          echo "export YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
-
+      # - name: Configure Terraform Environment
+      #   run: |
+      #     cd terraform/
 
       - name: Initialize Terraform
         run: |
@@ -40,13 +36,6 @@ jobs:
 
       - name: Plan changes
         run: |
-          echo "export TF_VAR_YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
-          echo "export TF_VAR_YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
-          echo "export TF_VAR_YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
-          echo "export TF_VAR_bucket=${{ secrets.BUCKET }}" >> $GITHUB_ENV
-          echo "export TF_VAR_access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "export TF_VAR_secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
-          echo "export TF_VAR_ssh_key=${{ secrets.SSH_KEY }}" >> $GITHUB_ENV
           cd ./terraform/
           echo $TF_VAR_TOKEN
           terraform plan

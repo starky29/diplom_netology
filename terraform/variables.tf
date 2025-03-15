@@ -1,46 +1,37 @@
-variable "YC_CLOUD_ID" {
+variable "cloud_id" {
   type = string
   sensitive = true
-  default = ""
-
 }
 
-variable "YC_FOLDER_ID" {
+variable "folder_id" {
   type = string
   sensitive = true
-  default = ""
-
 }
 
-variable "YC_TOKEN" {
+variable "token" {
   type = string
   sensitive = true
-  default = ""
 }
 
 variable "ssh_key" {
   description = "ssh public key"
   type        = string
   sensitive = true
-  default = ""
 }
 
 variable "bucket" {
   type        = string
   description = "bucket name"
-  default = ""
 } 
 
 variable "access_key" {
   type        = string
   description = "access_key"
-  default = ""
 }
 
 variable "secret_key" {
   type        = string
   description = "secret_key"
-  default = ""
 }
 
 variable "zone" {
