@@ -18,11 +18,20 @@ variable "ssh_key" {
   type        = string
 }
 
-variable "bucket" {} # bucket name
+variable "bucket" {
+  type        = string
+  description = "bucket name"
+} 
 
-variable "access_key" {} #bucket_access_key
+variable "access_key" {
+  type        = string
+  description = "bucket_access_key"
+}
 
-variable "secret_key" {} #bucket_secret_key
+variable "secret_key" {
+  type        = string
+  description = "bucket_secret_key"
+}
 
 variable "zone" {
   description = "Зона доступности"
