@@ -38,12 +38,12 @@ jobs:
       - name: Validate Terraform configuration
         run: terraform validate
 
-      - name: Plan changes
-        run: terraform plan
+      # - name: Plan changes
+      #   run: terraform plan
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform apply tfplan
+        run: terraform apply
         
   destroy-infrastructure:
     runs-on: ubuntu-latest
