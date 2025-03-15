@@ -23,7 +23,7 @@ variable "TF_VAR_bucket" {
   description = "bucket name"
 } 
 
-variable "TF_VAR_access_key" {
+variable "TF_VAR_ACCESS_KEY" {
   type        = string
   description = "access_key"
 }
