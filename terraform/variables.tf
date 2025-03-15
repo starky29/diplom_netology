@@ -27,16 +27,19 @@ variable "ssh_key" {
 variable "bucket" {
   type        = string
   description = "bucket name"
+  default = ""
 } 
 
 variable "access_key" {
   type        = string
   description = "access_key"
+  default = ""
 }
 
 variable "secret_key" {
   type        = string
   description = "secret_key"
+  default = ""
 }
 
 variable "zone" {
