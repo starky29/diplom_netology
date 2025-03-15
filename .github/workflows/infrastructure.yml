@@ -22,6 +22,7 @@ jobs:
 
       - name: Initialize Terraform
         run: |
+          cd ./terraform/
           ls -la
           ./terraform/terraform init
 
@@ -36,8 +37,9 @@ jobs:
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          cd ./terraform/
           ls -la
-          ./terraform/terraform apply
+          terraform apply
         
   destroy-infrastructure:
     runs-on: ubuntu-latest
