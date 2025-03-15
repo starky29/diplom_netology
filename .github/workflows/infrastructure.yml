@@ -49,9 +49,6 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          echo "export YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
-          echo "export YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
-          echo "export YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
           terraform plan
 
       - name: Apply changes
