@@ -20,6 +20,9 @@ jobs:
         with:
           terraform_version: '1.8.5'
 
+      - name: List files in the working directory
+        run: ls -la
+
       - name: Move to working directory
         run: cd terraform/
 
