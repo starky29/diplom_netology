@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - main
+env:
+  TF_VAR_BUCKET: ${{secrets.BUCKET}}
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
