@@ -9,6 +9,12 @@ on:
       - main
 env:
   TF_VAR_bucket: ${{ secrets.BUCKET }}
+  TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
+  TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+  TF_VAR_cloud_id: ${{ secrets.YANDEX_CLOUD_CLOUD_ID }}
+  TF_VAR_folder_id: ${{ secrets.YANDEX_CLOUD_FOLDER_ID }}
+  TF_VAR_token: ${{ secrets.YANDEX_CLOUD_TOKEN }}
+  TF_VAR_ssh_key: ${{secrets.SSH_KEY}}
 
 jobs:
   deploy-infrastructure:
@@ -41,7 +47,7 @@ jobs:
           cd ./terraform/
           echo "my var is ${{env.TF_VAR_bucket}} and ${{vars.TF_VAR_SSH_KEY}}"
 
-          terraform plan -var="access_key=${{ secrets.ACCESS_KEY }}" -var="secret_key=${{ secrets.SECRET_KEY }}" -var="cloud_id=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" -var="folder_id=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" -var="token=${{ secrets.YANDEX_CLOUD_TOKEN }}" -var="ssh_key=${{secrets.SSH_KEY}}"
+          terraform plan
 
       # - name: Apply changes
       #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
