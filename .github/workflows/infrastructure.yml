@@ -36,7 +36,7 @@ jobs:
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform apply
+        run: terraform/terraform apply
         
   destroy-infrastructure:
     runs-on: ubuntu-latest
