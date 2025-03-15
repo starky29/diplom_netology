@@ -37,10 +37,8 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          echo "export bucket=${{ secrets.BUCKET }}" >> $GITHUB_ENV
-          echo "export access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "export secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
-        
+          echo "my var is ${{env.TF_VAR_BUCKET}} and ${{env.TF_VAR_SSH_KEY}}"
+
           terraform plan -var="bucket=${{ secrets.BUCKET }}" -var="access_key=${{ secrets.ACCESS_KEY }}" -var="secret_key=${{ secrets.SECRET_KEY }}" -var="cloud_id=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" -var="folder_id=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" -var="token=${{ secrets.YANDEX_CLOUD_TOKEN }}" -var="ssh_key=${{secrets.SSH_KEY}}"
 
       - name: Apply changes
