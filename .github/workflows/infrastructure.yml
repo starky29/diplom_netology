@@ -35,8 +35,10 @@ jobs:
           cd ./terraform/
           terraform validate
 
-      # - name: Plan changes
-      #   run: terraform plan
+      - name: Plan changes
+        run: |
+          cd ./terraform/
+          terraform plan
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
