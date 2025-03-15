@@ -48,7 +48,7 @@ jobs:
           echo "export TF_VAR_secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           echo "export TF_VAR_ssh_key=${{ secrets.SSH_KEY }}" >> $GITHUB_ENV
           cd ./terraform/
-          echo ${{ TF_VAR_TOKEN }}
+          echo $TF_VAR_TOKEN
           terraform plan
 
       - name: Apply changes
