@@ -24,12 +24,13 @@ jobs:
         run: |
           cd ./terraform/
           ls -la
-          ./terraform/terraform init
+          terraform init
 
       - name: Validate Terraform configuration
         run: |
           ls -la
-          ./terraform/terraform validate
+          cd ./terraform/
+          terraform validate
 
       # - name: Plan changes
       #   run: terraform plan
