@@ -1,22 +1,29 @@
 variable "cloud_id" {
   description = "ID облака"
   type        = string
-
 }
+
 variable "token" {
   type        = string
   description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
 }
+
 variable "folder_id" {
   description = "ID папки"
   type        = string
-
 }
+
 variable "ssh_key" {
   description = "ssh public key"
   type        = string
-
 }
+
+variable "bucket" {} # bucket name
+
+variable "access_key" {} #bucket_access_key
+
+variable "secret_key" {} #bucket_secret_key
+
 variable "zone" {
   description = "Зона доступности"
   type        = string

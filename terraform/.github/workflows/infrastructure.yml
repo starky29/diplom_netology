@@ -1,0 +1,61 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  token: ${{ secrets.YANDEX_CLOUD_TOKEN }}
+  folder_id: ${{ secrets.YANDEX_CLOUD_FOLDER_ID }}
+  cloud_id: ${{ secrets.YANDEX_CLOUD_CLOUD_ID }}
+  ssh_key:  ${{ secrets.SSH_KEY }}
+  secret_key:  ${{ secrets.SECRET_KEY }}
+  bucket:  ${{ secrets.BUCKET }}
+  access_key:  ${{ secrets.ACCESS_KEY }}
+
+jobs:
+  deploy-infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: '1.8.5'
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Validate Terraform configuration
+        run: terraform validate
+
+      - name: Plan changes
+        run: terraform plan -out=tfplan
+
+      - name: Apply changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: terraform apply tfplan
+        
+  destroy-infrastructure:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'destroy'
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v1
+          with:
+              terraform_version: '1.8.5'
+
+        - name: Initialize Terraform
+          run: terraform init
+
+        - name: Destroy infrastructure
+          run: terraform destroy -auto-approve

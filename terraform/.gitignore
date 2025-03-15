@@ -33,5 +33,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-providers.tf
+!variables.tfvars
+!providers.tf
+
+# providers.tf
 *.lock.hcl
