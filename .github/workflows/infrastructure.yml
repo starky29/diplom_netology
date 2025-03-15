@@ -19,12 +19,13 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: '1.8.5'
-      - name: List files in the working directory
-        run: cd ./terraform/
+
+      - name: Move to working directory
+        run: cd terraform/
 
       - name: List files in the working directory
-        run: |
-            ls -la
+        run: ls -la
+
       - name: Initialize Terraform
         run: terraform init
 
