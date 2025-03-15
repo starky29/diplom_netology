@@ -45,7 +45,7 @@ jobs:
   Apply-infrastructure:
     runs-on: ubuntu-latest
     needs: Plan-infrastructure
-    if: false 
+    if: contains(github.event.head_commit.message, 'apply')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -80,8 +80,12 @@ jobs:
               terraform_version: '1.8.5'
 
         - name: Initialize Terraform
-          run: terraform init
+          run: |
+            cd ./terraform/
+            terraform init
 
         - name: Destroy infrastructure
           if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-          run: terraform destroy -auto-approve 
+          run: |
+            cd ./terraform/
+            terraform destroy -auto-approve 
