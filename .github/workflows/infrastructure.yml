@@ -26,7 +26,7 @@ jobs:
           cd ./terraform/
           ls -la
           echo $TF_VAR_BUCKET
-          terraform init
+          terraform init -backend-config="bucket=$TF_VAR_BUCKET" -backend-config="secret_key=$TF_VAR_SECRET_KEY" -backend-config="access_key=$TF_VAR_ACCESS_KEY"
 
       - name: Validate Terraform configuration
         run: |
