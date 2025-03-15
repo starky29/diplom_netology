@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - main
+env:
+  TF_VAR_bucket: ${{ secrets.BUCKET }}
 
 jobs:
   deploy-infrastructure:
@@ -37,15 +39,15 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          echo "my var is ${{env.TF_VAR_BUCKET}} and ${{env.TF_VAR_SSH_KEY}}"
+          echo "my var is ${{env.TF_VAR_bucket}} and ${{env.TF_VAR_SSH_KEY}}"
 
           terraform plan -var="bucket=${{ secrets.BUCKET }}" -var="access_key=${{ secrets.ACCESS_KEY }}" -var="secret_key=${{ secrets.SECRET_KEY }}" -var="cloud_id=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" -var="folder_id=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" -var="token=${{ secrets.YANDEX_CLOUD_TOKEN }}" -var="ssh_key=${{secrets.SSH_KEY}}"
 
-      - name: Apply changes
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          cd ./terraform/
-          terraform apply
+      # - name: Apply changes
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   run: |
+      #     cd ./terraform/
+      #     terraform apply
 
         
   destroy-infrastructure:
