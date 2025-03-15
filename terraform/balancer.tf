@@ -11,7 +11,6 @@ resource "yandex_lb_target_group" "k8s-worker-cluster" {
   }
 }
 #Создание сетевого балансировщика
-
 resource "yandex_lb_network_load_balancer" "k8s" {
   depends_on = [yandex_lb_target_group.k8s-worker-cluster]
   name = "k8s-balancer"
