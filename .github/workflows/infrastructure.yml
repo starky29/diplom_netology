@@ -67,7 +67,7 @@ jobs:
 
         
   destroy-infrastructure:
-    needs: Apply-infrastructure
+    needs: Plan-infrastructure
     runs-on: ubuntu-latest
     if: false 
     steps:
@@ -83,4 +83,5 @@ jobs:
           run: terraform init
 
         - name: Destroy infrastructure
+          if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'destroy')
           run: terraform destroy -auto-approve 
