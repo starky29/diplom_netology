@@ -1,21 +1,25 @@
-# variable "YC_CLOUD_ID" {
-#   description = "ID облака"
-#   type        = string
-# }
+variable "YC_CLOUD_ID" {
+  description = "ID облака"
+  type        = string
+  sensitive = true
+}
 
-# variable "YC_TOKEN" {
-#   type        = string
-#   description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
-# }
+variable "YC_TOKEN" {
+  type        = string
+  description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
+  sensitive = true
+}
 
-# variable "YC_FOLDER_ID" {
-#   description = "ID папки"
-#   type        = string
-# }
+variable "YC_FOLDER_ID" {
+  description = "ID папки"
+  type        = string
+  sensitive = true
+}
 
 variable "ssh_key" {
   description = "ssh public key"
   type        = string
+  sensitive = true
 }
 
 variable "bucket" {
