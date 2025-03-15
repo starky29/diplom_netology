@@ -40,6 +40,9 @@ jobs:
 
       - name: Plan changes
         run: |
+          echo "export TF_VAR_YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
+          echo "export TF_VAR_YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
+          echo "export TF_VAR_YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
           cd ./terraform/
           terraform plan
 

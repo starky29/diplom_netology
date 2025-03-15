@@ -1,21 +1,21 @@
 variable "YC_CLOUD_ID" {
   type = string
   sensitive = true
-  default = "${secrets.YANDEX_CLOUD_CLOUD_ID}"
+  default = ""
 
 }
 
 variable "YC_FOLDER_ID" {
   type = string
   sensitive = true
-  default = "${secrets.YANDEX_CLOUD_FOLDER_ID}"
+  default = ""
 
 }
 
 variable "YC_TOKEN" {
   type = string
   sensitive = true
-  default = "${secrets.YANDEX_CLOUD_TOKEN}"
+  default = ""
 }
 
 variable "ssh_key" {
