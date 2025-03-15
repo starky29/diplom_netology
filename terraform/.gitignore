@@ -33,7 +33,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-!variables.tfvars
+!terraform.tfvars
 !providers.tf
 
 # providers.tf

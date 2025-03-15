@@ -41,10 +41,7 @@ jobs:
         run: |
           cd ./terraform/
           ls -la
-          terraform apply \
-            -backend-config="bucket=${{ secrets.BUCKET }}" \
-            -backend-config="secret_key=${{ secrets.SECRET_KEY }}" \
-            -backend-config="access_key=${{ secrets.ACCESS_KEY }}"
+          terraform apply
         
   destroy-infrastructure:
     needs: deploy-infrastructure
