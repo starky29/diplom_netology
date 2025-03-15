@@ -46,6 +46,7 @@ jobs:
           echo "export TF_VAR_bucket=${{ secrets.BUCKET }}" >> $GITHUB_ENV
           echo "export TF_VAR_access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
           echo "export TF_VAR_secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "export TF_VAR_ssh_key=${{ secrets.SSH_KEY }}" >> $GITHUB_ENV
           cd ./terraform/
           terraform plan
 

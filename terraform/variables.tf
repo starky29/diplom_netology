@@ -22,6 +22,7 @@ variable "ssh_key" {
   description = "ssh public key"
   type        = string
   sensitive = true
+  default = ""
 }
 
 variable "bucket" {
