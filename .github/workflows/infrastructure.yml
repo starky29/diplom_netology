@@ -43,6 +43,9 @@ jobs:
           echo "export TF_VAR_YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
           echo "export TF_VAR_YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
           echo "export TF_VAR_YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
+          echo "export TF_VAR_bucket=${{ secrets.BUCKET }}" >> $GITHUB_ENV
+          echo "export TF_VAR_access_key=${{ secrets.ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "export TF_VAR_secret_key=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           cd ./terraform/
           terraform plan
 
