@@ -24,7 +24,7 @@ jobs:
         run: |
           cd ./terraform/
           ls -la
-          echo $TF_VAR_bucket
+          echo $TF_VAR_BUCKET
           terraform init
 
       - name: Validate Terraform configuration
