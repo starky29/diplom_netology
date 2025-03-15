@@ -42,7 +42,7 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          terraform plan -var="TF_VAR_bucket=${{ secrets.BUCKET }}" -var="TF_VAR_access_key=${{ secrets.ACCESS_KEY }}" -var="TF_VAR_secret_key=${{ secrets.SECRET_KEY }}"
+          terraform plan
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
