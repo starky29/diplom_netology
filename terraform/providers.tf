@@ -1,7 +1,7 @@
 provider "yandex" {
-  cloud_id  = var.YC_CLOUD_ID
-  folder_id = var.YC_FOLDER_ID
-  token     = var.YC_TOKEN
+  cloud_id  = YC_CLOUD_ID
+  folder_id = YC_FOLDER_ID
+  token     = YC_TOKEN
   zone      = var.zone
 }
 terraform {
