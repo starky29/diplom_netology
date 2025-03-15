@@ -49,7 +49,7 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          terraform plan
+          terraform plan -var="YC_CLOUD_ID=${{secrets.YANDEX_CLOUD_CLOUD_ID}}" -var="YC_FOLDER_ID=${{secrets.YANDEX_CLOUD_FOLDER_ID}}" -var="YC_TOKEN=${{secrets.YANDEX_CLOUD_TOKEN}}"
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
