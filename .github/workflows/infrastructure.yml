@@ -23,7 +23,7 @@ jobs:
       - name: Initialize Terraform
         run: |
           cd ./terraform/
-          echo $(TF_VAR_bucket)
+          echo $TF_VAR_bucket
           ls -la
           terraform init
 
