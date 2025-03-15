@@ -1,18 +1,15 @@
 variable "YC_CLOUD_ID" {
-  description = "ID облака"
-  type        = string
-  sensitive = true
-}
-
-variable "YC_TOKEN" {
-  type        = string
-  description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
+  type = string
   sensitive = true
 }
 
 variable "YC_FOLDER_ID" {
-  description = "ID папки"
-  type        = string
+  type = string
+  sensitive = true
+}
+
+variable "YC_TOKEN" {
+  type = string
   sensitive = true
 }
 

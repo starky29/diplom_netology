@@ -7,14 +7,7 @@ on:
   pull_request:
     branches:
       - main
-env:
-  TF_VAR_bucket: ${{secrets.BUCKET}}
-  TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
-  TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
-  YC_cloud_id: ${{ secrets.YANDEX_CLOUD_CLOUD_ID }}
-  YC_token: ${{ secrets.YANDEX_CLOUD_TOKEN }}
-  YC_folder_id: ${{ secrets.YANDEX_CLOUD_FOLDER_ID }}
-  TF_VAR_ssh_key: ${{ secrets.SSH_KEY }}
+
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
@@ -29,21 +22,19 @@ jobs:
 
       - name: Configure Terraform Environment
         run: |
-            cd terraform/
-            echo "export YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
-            echo "export YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
-            echo "export YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
+          cd terraform/
+          echo "export YC_CLOUD_ID=${{ secrets.YANDEX_CLOUD_CLOUD_ID }}" >> $GITHUB_ENV
+          echo "export YC_FOLDER_ID=${{ secrets.YANDEX_CLOUD_FOLDER_ID }}" >> $GITHUB_ENV
+          echo "export YC_TOKEN=${{ secrets.YANDEX_CLOUD_TOKEN }}" >> $GITHUB_ENV
 
       - name: Initialize Terraform
         run: |
           cd ./terraform/
-          ls -la
           terraform init -backend-config="bucket=${{ secrets.BUCKET }}" -backend-config="secret_key=${{ secrets.SECRET_KEY }}" -backend-config="access_key=${{ secrets.ACCESS_KEY }}"
 
       - name: Validate Terraform configuration
         run: |
           cd ./terraform/
-          ls -la
           terraform validate
 
       - name: Plan changes
@@ -55,9 +46,8 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           cd ./terraform/
-          ls -la
-          echo ${{env.TF_VAR_access_key}}
           terraform apply
+
         
   destroy-infrastructure:
     needs: deploy-infrastructure
