@@ -8,9 +8,9 @@ on:
     branches:
       - main
 env:
-  TF_VAR_BUCKET: ${{secrets.BUCKET}}
-  TF_VAR_ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-  TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  TF_VAR_bucket: ${{secrets.BUCKET}}
+  TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
+  TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
