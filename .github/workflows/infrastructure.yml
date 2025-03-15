@@ -1,6 +1,6 @@
 name: Deploy Infrastructure
 
-on:
+# on:
 #   push:
 #     branches:
 #       - main
@@ -8,6 +8,9 @@ on:
 #     branches:
 #       - main
   workflow_dispatch:
+    - Plan-infrastructure
+    - Apply-infrastructure
+    - Destroy-infrastructure
 
 
 env:
