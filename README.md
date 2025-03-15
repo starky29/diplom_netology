@@ -89,10 +89,18 @@
 Изменил сервис для графаны под настройки своего балансера [grafana-svc](./manifests/garafana-svc.yaml), а так же [ингресс](./manifests/ingres-monitoring.yaml)
 * ![alt text](img/image-19.png)
 Задеплоил [приложение](./manifests/app.yaml)
-* ![alt text](img/image-18.png) 
+* ![alt text](img/image-18.png)
 * ![alt text](img/image-20.png)
-  
-
+* 
+CI/CD с помощью GitHub Actions конфиг [пайплайна](.github/workflows/infrastructure.yml)
+Добавил секреты:
+* ![alt text](img/image-30.png)
+В пайплайне присутствуют 3 джобы, одна обязательная ``Plan-infrastructur``(даннаяджоба запускается при любом каммите и дальнейшем пуше в ветку main, а также при пул реквестах) для ознакомления и две зависящие от нее, а так же от слова в каммите. Если в каммите пристсвтует слово ``apply``, то полсе ``Plan-infrastructur``  запускается ``Apply-infrastructur``: 
+* ![alt text](img/image-26.png)
+* ![alt text](img/image-28.png)
+Если же в каммите присутствует слово ``destroy``, полсе ``Plan-infrastructur``  запускается ``Destroy-infrastructur``:
+* ![alt text](img/image-27.png)
+* ![alt text](img/image-29.png)
 ---
 ### 5.Установка и настройка CI/CD
 
@@ -115,7 +123,7 @@
 Настроил runner
 * ![alt text](img/image-22.png)
 Настроил workflow [файл](starky29/app_for_diplom.git) для ci/cd
-Тест автобиплоя
+Тест автодиплоя
 * ![alt text](img/image-24.png)
 * ![alt text](img/image-25.png)
 * ![alt text](img/image-23.png)
