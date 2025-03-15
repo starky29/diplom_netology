@@ -9,6 +9,8 @@ on:
       - main
 env:
   TF_VAR_BUCKET: ${{secrets.BUCKET}}
+  TF_VAR_ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+  TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
