@@ -13,8 +13,8 @@ resource "yandex_lb_target_group" "k8s-worker-cluster" {
 #Создание сетевого балансировщика
 
 resource "yandex_lb_network_load_balancer" "k8s" {
+  depends_on = [yandex_lb_target_group.k8s-worker-cluster]
   name = "k8s-balancer"
-
   listener {
     name        = var.listener_web_app.name
     port        = var.listener_web_app.port
@@ -37,6 +37,7 @@ resource "yandex_lb_network_load_balancer" "k8s" {
   }
 }
 resource "yandex_lb_network_load_balancer" "k8sgrafana" {
+  depends_on = [yandex_lb_target_group.k8s-worker-cluster]
   name = "grafana-k8s-balancer"
   listener {
     name        = var.listener_grafana.name
