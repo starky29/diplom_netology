@@ -45,15 +45,13 @@ jobs:
       - name: Plan changes
         run: |
           cd ./terraform/
-          echo "my var is ${{env.TF_VAR_bucket}} and ${{vars.TF_VAR_SSH_KEY}}"
-
           terraform plan
 
-      # - name: Apply changes
-      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #   run: |
-      #     cd ./terraform/
-      #     terraform apply
+      - name: Apply changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd ./terraform/
+          terraform apply
 
         
   destroy-infrastructure:
