@@ -39,7 +39,7 @@ jobs:
         run: terraform validate
 
       - name: Plan changes
-        run: terraform plan -out=tfplan
+        run: terraform plan
 
       - name: Apply changes
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
