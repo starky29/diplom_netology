@@ -29,12 +29,10 @@ folder_id = "<пространство_для_подключения_к_ЯО>"
  
 2. Вторая часть, основная инфраструктура<br>
 >Конфиг создающий ноды кластера [k8s](./terraform/k8s.tf), в данном случаи я описал ноды через счетчик count ```counts_masters``` и ```counts_workers``` для более простого и быстрого масштабирования инфраструктуры, шлюз для кластера - [бастион](./terraform/k8s.tf), а так же [сети и таблицы маршрутизации](./terraform/network.tf)   
-
+<p align="center"><img src="img/image-5.png"></p><br>
 <p align="center"><img src="img/image-1.png"></p><br>
 <p align="center"><img src="img/image-2.png"></p><br>
 <p align="center"><img src="img/image-3.png"></p><br>
-<p align="center"><img src="img/image-4.png"></p><br>
-<p align="center"><img src="img/image-5.png"></p><br>
 
 После создания инфраструктуры, на основе шаблона [inventory.tftpl](./terraform/inventory.tftpl) создается инвентари конфиг для ansible-playbook в папке [ansible](./ansible/hosts.yml). Как и в предыдущем случаи все конфиги предтсавлены в папке [terraform](./terraform/) за исключением personal.auto.tfvars и bucket.auto.tfvars. Данные файлы имеют следующий вид:
 <br>personal.auto.tfvars</br>
