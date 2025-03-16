@@ -1,9 +1,8 @@
-# Дипломная работа
-
-## Этапы выполнения:
-
-
-### 1.Создание облачной инфраструктуры
+# Дипломная работа. 
+##### Автор: <b>Старков Андрей</b>.
+---
+### Этапы выполнения:
+## 1.Создание облачной инфраструктуры
 
 Для начала необходимо подготовить облачную инфраструктуру в ЯО при помощи Terraform.
 
@@ -17,17 +16,43 @@
 1. Terraform сконфигурирован и создание инфраструктуры посредством Terraform возможно без дополнительных ручных действий, стейт основной конфигурации сохраняется в бакете или Terraform Cloud
 2. Полученная конфигурация инфраструктуры является предварительной, поэтому в ходе дальнейшего выполнения задания возможны изменения.
 ---
-## 1.Решение
-Создание сервисного аккаунта а так же подготовка [backend](./bucket/) выполняется конфигом терраформа расположенном в папке backend
-* ![alt text](img/image.png)
-Конфиг для терраформа создающий ноды кластера, шлюз, а так же сети (таблицы маршрутизации) находиться в папке terraform
-* ![alt text](img/image-1.png)
-* ![alt text](img/image-2.png)
-* ![alt text](img/image-3.png)
-* ![alt text](img/image-4.png)
-* ![alt text](img/image-5.png)
+### 1.Решение
+Разобьем нашу инфраструктуру на две части:
+1. Первая часть backend<br>
+>В данном случаи я создаю сервисный аккаут, с3 хранилище и файла provider.tf и файл с переменными bucket.auto.tfvars (для с3 хранилища) для второй части инфраструктуры. Все манифесты расположены в папке <b>[bucket](./bucket/)</b> за исключениям служебных файлов и файлов с чувствительными данными, таки как personal.auto.tfvars. Переменный в данном файле выглядят следующим образом:
+```
+token  =  "<токен_для_подключения_к_ЯО>"
+cloud_id  = "<айди_для_подключения_к_ЯО>"
+folder_id = "<пространство_для_подключения_к_ЯО>"
+``` 
+<p align="center"><img src="img/image.png"></p><br>
+ 
+2. Вторая часть, основная инфраструктура<br>
+>Конфиг создающий ноды кластера [k8s](./terraform/k8s.tf), в данном случаи я описал ноды через счетчик count ```counts_masters``` и ```counts_workers``` для более простого и быстрого масштабирования инфраструктуры, шлюз для кластера - [бастион](./terraform/k8s.tf), а так же [сети и таблицы маршрутизации](./terraform/network.tf)   
+
+<p align="center"><img src="img/image-1.png"></p><br>
+<p align="center"><img src="img/image-2.png"></p><br>
+<p align="center"><img src="img/image-3.png"></p><br>
+<p align="center"><img src="img/image-4.png"></p><br>
+<p align="center"><img src="img/image-5.png"></p><br>
+
+После создания инфраструктуры, на основе шаблона [inventory.tftpl](./terraform/inventory.tftpl) создается инвентари конфиг для ansible-playbook в папке [ansible](./ansible/hosts.yml). Как и в предыдущем случаи все конфиги предтсавлены в папке [terraform](./terraform/) за исключением personal.auto.tfvars и bucket.auto.tfvars. Данные файлы имеют следующий вид:
+<br>personal.auto.tfvars</br>
+```
+token  =  "<токен_для_подключения_к_ЯО>"
+cloud_id  = "<айди_для_подключения_к_ЯО>"
+folder_id = "<пространство_для_подключения_к_ЯО>"
+ssh_key = "<публичный_ключ_для_аутентификации>"
+```
+<br>bucket.auto.tfvars</br>
+```
+bucket = "<имя_бакета>"
+access_key = "<ключ_доступа_к_хранилищу>"
+secret_key = "<секретный_ключ_к_храниллищу>"
+```
 ---
-### 2.Создание Kubernetes кластера
+
+## 2.Создание Kubernetes кластера
 
 На этом этапе необходимо создать Kubernetes кластер на базе предварительно созданной инфраструктуры.   Требуется обеспечить доступ к ресурсам из Интернета.
 
@@ -37,15 +62,16 @@
 2. В файле `~/.kube/config` находятся данные для доступа к кластеру.
 3. Команда `kubectl get pods --all-namespaces` отрабатывает без ошибок.
 ---
-## 2.Решение
-За основу была взята роль для [ansible](https://vk.com/@kodepteam-sozdanie-kubernetes-klastera-pri-pomoschi-ansible-rolei-i-mu) и переделаны под [актуальное](./ansible/k8s-cluster/) состояние (например настройка сети и т.д.)
-запускать playbook необходимо с параметром:
+### 2.Решение
+За основу была взята роль для [ansible](https://vk.com/@kodepteam-sozdanie-kubernetes-klastera-pri-pomoschi-ansible-rolei-i-mu) и переделана под [актуальное](./ansible/k8s-cluster/) состояние (например настройка сети и т.д.).
+>Запускать playbook необходимо с параметром '-o StrictHostKeyChecking=no':
+
 ```ansible-playbook -i hosts.yml ./k8s-cluster/playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no' ```
-* ![alt text](img/image-14.png)
-* ![alt text](img/image-13.png)
+<p align="center"><img src="img/image-14.png"></p><br>
+<p align="center"><img src="img/image-13.png"></p><br>
 
 ---
-### 3.Создание тестового приложения
+## 3.Создание тестового приложения
 
 Для перехода к следующему этапу необходимо подготовить тестовое приложение, эмулирующее основное приложение разрабатываемое вашей компанией.
 
@@ -55,18 +81,19 @@
 2. Регистри с собранным docker img/image. В качестве регистри может быть DockerHub или Yandex Container Registry, созданный также с помощью terraform.
 
 ---
-## 3.Решение
-Созданное приложение с nginx лежит в репозитории [app_for_diplom](https://github.com/starky29/app_for_diplom)
-Подготовил образ
-* ![alt text](img/image-6.png)
-Загрузил образ
-* ![alt text](img/image-9.png)
-* ![alt text](img/image-8.png)
-Проверил работу образа
-* ![alt text](img/image-7.png)
+### 3.Решение
+В качестве тестового приложения был выбран образ nginx со статической страничкой. Был создан отдельный репозиторий [app_for_diplom](https://github.com/starky29/app_for_diplom).
+Для начала подготовил образ локально на своей машине
+<p align="center"><img src="img/image-6.png"></p><br>
+Для проверки работы образа, запустил образ локально с проброской портов с 80 на 8080 локального компьютера
+<p align="center"><img src="img/image-7.png"></p><br>
+Загрузил образ в docker registry
+<p align="center"><img src="img/image-9.png"></p><br>
+<p align="center"><img src="img/image-8.png"></p><br>
+
   
 ---
-### 4.Подготовка cистемы мониторинга и деплой приложения
+## 4.Подготовка cистемы мониторинга и деплой приложения
 
 Уже должны быть готовы конфигурации для автоматического создания облачной инфраструктуры и поднятия Kubernetes кластера.  
 Теперь необходимо подготовить конфигурационные файлы для настройки нашего Kubernetes кластера.
@@ -82,27 +109,35 @@
 4. Http доступ на 80 порту к тестовому приложению.
 5. Atlantis или terraform cloud или ci/cd-terraform
 ---
-## 4.Решение
- Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер
-* ![alt text](img/image-17.png)
-Для того что бы вывести наружу сервисы создал [балансер](./terraform/balancer.tf) и задеплоил [nginx-controller](./manifests/ing-mon-nginx.yaml)
-Изменил сервис для графаны под настройки своего балансера [grafana-svc](./manifests/garafana-svc.yaml), а так же [ингресс](./manifests/ingres-monitoring.yaml)
-* ![alt text](img/image-19.png)
+### 4.Решение
+Для начала задеплоил [nginx-controller](./manifests/ing-mon-nginx.yaml), а также добавил в конфигурацию инфраструктуры [балансер](./terraform/balancer.tf), который будет выводить наружу приложение и мониторинг
+
+Добавил роль [gaps](./ansible/k8s-cluster/roles/gaps/) в ansible-playbook для диплоя [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) в кластер. С данным репозиторием есть ньюанс, он создает сервис графаны на 80 порт, для того что бы автоматизировать нужные мне настройки было принято решение удалить данный сервис (посредствам ансибл плэйбука) и добавить свой сервис для [grafana](./manifests/garafana-svc.yaml)
+<p align="center"><img src="img/image-17.png"></p><br>
+<p align="center"><img src="img/image-19.png"></p><br>
+
 Задеплоил [приложение](./manifests/app.yaml)
-* ![alt text](img/image-18.png)
-* ![alt text](img/image-20.png)
-* 
-CI/CD с помощью GitHub Actions конфиг [пайплайна](.github/workflows/infrastructure.yml)
-Добавил секреты:
-* ![alt text](img/image-30.png)
-В пайплайне присутствуют 3 джобы, одна обязательная ``Plan-infrastructur``(даннаяджоба запускается при любом каммите и дальнейшем пуше в ветку main, а также при пул реквестах) для ознакомления и две зависящие от нее, а так же от слова в каммите. Если в каммите пристсвтует слово ``apply``, то полсе ``Plan-infrastructur``  запускается ``Apply-infrastructur``: 
-* ![alt text](img/image-26.png)
-* ![alt text](img/image-28.png)
+<p align="center"><img src="img/image-18.png"></p><br>
+<p align="center"><img src="img/image-20.png"></p><br>
+
+Задача по автоматизации отслеживания инфраструктуры была реализована с помощью CI/CD с помощью GitHub Actions. Данное решение было принято в связи с тем что длступ к Terraform Cloud закрыт для адресов из России,  Atlantis server для дашбордов использует сервис NGROK который так же не доступен с Российскими адресами.
+Для переноса деплоя инфрастуркутры пришлось внести некоторые корректировки,чувствительные данные из файлов personal.auto.tfvars и bucket.auto.tfvars, были перенесены в секреты репозитория
+<p align="center"><img src="img/image-30.png"></p><br>
+
+Конфиг [пайплайна](.github/workflows/infrastructure.yml).
+
+В пайплайне присутствуют 3 джобы, одна обязательная ``Plan-infrastructur``(данная джоба запускается при любом каммите и дальнейшем пуше в ветку main, а также при пул реквестах) для ознакомления и две зависящие от нее, а так же от <b>слова</b> в каммите. Если в каммите пристсвтует слово ``apply``, то полсе ``Plan-infrastructur``  запускается ``Apply-infrastructur``: 
+
+<p align="center"><img src="img/image-26.png"></p><br>
+<p align="center"><img src="img/image-28.png"></p><br>
+
 Если же в каммите присутствует слово ``destroy``, полсе ``Plan-infrastructur``  запускается ``Destroy-infrastructur``:
-* ![alt text](img/image-27.png)
-* ![alt text](img/image-29.png)
+
+<p align="center"><img src="img/image-27.png"></p><br>
+<p align="center"><img src="img/image-29.png"></p><br>
+
 ---
-### 5.Установка и настройка CI/CD
+## 5.Установка и настройка CI/CD
 
 Осталось настроить ci/cd систему для автоматической сборки docker img/image и деплоя приложения при изменении кода.
 
@@ -117,14 +152,16 @@ CI/CD с помощью GitHub Actions конфиг [пайплайна](.github
 2. При любом коммите в репозиторие с тестовым приложением происходит сборка и отправка в регистр Docker образа.
 3. При создании тега (например, v1.0.0) происходит сборка и отправка с соответствующим label в регистри, а также деплой соответствующего Docker образа в кластер Kubernetes.
 ---
-## 5.Решение
-Подготовил секреты
-* ![alt text](img/image-21.png)
-Настроил runner
-* ![alt text](img/image-22.png)
-Настроил workflow [файл](starky29/app_for_diplom.git) для ci/cd
-Тест автодиплоя
-* ![alt text](img/image-24.png)
-* ![alt text](img/image-25.png)
-* ![alt text](img/image-23.png)
+### 5.Решение
+Подготовил секреты для авторизации на docker registry
+<p align="center"><img src="img/image-21.png"></p><br>
+
+Настроил runner на одной из нод кластера куба
+<p align="center"><img src="img/image-22.png"></p><br>
+
+Настраиваем workflow [файл](starky29/app_for_diplom/.github/workflows/ci-cd.yaml) для ci/cd и тестируем диплой прилодения
+<p align="center"><img src="img/image-24.png"></p><br>
+<p align="center"><img src="img/image-25.png"></p><br>
+<p align="center"><img src="img/image-23.png"></p><br>
+
 ---

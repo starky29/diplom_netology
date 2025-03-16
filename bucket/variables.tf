@@ -14,9 +14,6 @@ variable "folder_id" {
 
 }
 
-variable "ssh_public_key" {
-  type    = string
-}
 variable "github_token" {
   type    = string
 }
